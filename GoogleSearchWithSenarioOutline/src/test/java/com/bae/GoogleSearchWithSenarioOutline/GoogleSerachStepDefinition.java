@@ -67,20 +67,25 @@ public class GoogleSerachStepDefinition {
 	}
 
 
-	@Then("^I am taken to a page with relevant infomation about the searchterm$")
+	@Then("^I am taken to a page with relevant infomation about the searchterm \"([^\"]*)\"$")
 	public void i_am_taken_to_a_page_with_relevant_infomation_about_the_searchterm(String arg1)  {
 	    // Write code here that turns the phrase above into concrete actions
+		
+
+		 
+		assertTrue(!url.equals(driver.getCurrentUrl()));
 		
 		String title = driver.getTitle();
 		
 		if (title.equals(arg1 + " - Google Search")) {
-			test.log(LogStatus.PASS, "search succsess");
+			test.log(LogStatus.PASS, "search success");
 		}else {
 			test.log(LogStatus.FAIL, "search failure");
 			
 		}
 		
-		  assertTrue(!url.equals(driver.getCurrentUrl()));
+		
+		 
 	   
 	}
 
