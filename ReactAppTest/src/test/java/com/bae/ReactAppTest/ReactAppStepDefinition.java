@@ -1,5 +1,6 @@
 package com.bae.ReactAppTest;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -104,12 +105,13 @@ public class ReactAppStepDefinition {
 	public void i_should_see_a_Success_Message()  {
 		formpage.clickSubmit();
 		
-		String message = driver.get
+		String message = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/h1")).getText();
 		
-		if (title.equals(arg1 + " - Google Search")) {
-			test.log(LogStatus.PASS, "search success");
+		
+		if (message.equals("Success")) {
+			test.log(LogStatus.PASS, "correct details entered");
 		}else {
-			test.log(LogStatus.FAIL, "search failure");
+			test.log(LogStatus.FAIL, "invalid details");
 			
 		}
 	   
@@ -117,11 +119,25 @@ public class ReactAppStepDefinition {
 
 	@When("^I fill out the second password field with the wrong password \"([^\"]*)\"$")
 	public void i_fill_out_the_second_password_field_with_the_wrong_password(String arg1)  {
-	   
+		formpage.enterPassword2(arg1);
+		test.log(LogStatus.INFO, "incorrect password entered as planned");
 	}
 
 	@Then("^I should see a message stating that the passwords do not match\\.$")
 	public void i_should_see_a_message_stating_that_the_passwords_do_not_match() {
+		
+		formpage.clickSubmit();
+		
+		String message = driver.findElement(By.xpath("//*[@id=\"root\"]/div/div/p[10]")).getText();
+		
+		
+		if (message.equals("The passwords do not match")) {
+			test.log(LogStatus.PASS, "successfully entered wrong password");
+		}else {
+			test.log(LogStatus.FAIL, "something went wrong");
+			
+		}
+		
 	  
 	}
 
